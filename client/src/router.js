@@ -10,6 +10,9 @@ import { action as logoutAction } from "./pages/Logout";
 import DailyTaskListPage, {
     loader as dailyTaskListLoader,
 } from "./pages/DailyTaskList";
+import DailyTaskListDetailPage, {
+    loader as dailyTaskListDetailLoader,
+} from "./pages/DailyTaskListDetail";
 
 const { createBrowserRouter } = require("react-router-dom");
 
@@ -43,10 +46,14 @@ const router = createBrowserRouter([
                 element: <ProfilePage />,
             },
             {
-                index: true,
                 path: "/auth/daily-task-list",
                 loader: dailyTaskListLoader,
                 element: <DailyTaskListPage />,
+            },
+            {
+                path: "/auth/daily-task-list/:id",
+                loader: dailyTaskListDetailLoader,
+                element: <DailyTaskListDetailPage />,
             },
             {
                 path: "/auth/logout",

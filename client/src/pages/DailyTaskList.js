@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { json, useLoaderData } from "react-router-dom";
 import axiosClient from "../axiosClient";
 
@@ -6,9 +6,17 @@ export default function DailyTaskListPage() {
     const data = useLoaderData();
     return (
         <ul id="daily-list">
-            {data.daily_list.map((item) => {
-                return <li key={item.id}>{item.title}</li>;
-            })}
+            {data.daily_list.map((item) => (
+                <li key={item.id}>
+                    <article>
+                        <p>{item.title}</p>
+                    </article>
+                    <div>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
+                </li>
+            ))}
         </ul>
     );
 }
