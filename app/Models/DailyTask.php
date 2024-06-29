@@ -19,16 +19,17 @@ class DailyTask extends Model
         'title',
         'description',
         'deadline',
-        'status'
+        'status',
+        'daily_list_id'
     ];
 
 
     public function taskList()
     {
-        return $this->belongsTo(DailyList::class, 'daily_list_id', 'id');
+        return $this->belongsTo(DailyList::class, 'daily_list_id');
     }
 
-    
+
 
     public function scopeFinished(Builder $query)
     {

@@ -14,8 +14,7 @@ class DailyTaskController extends Controller
     {
         $dailyList = DailyList::with('tasks')->where("user_id", $request->user()->id)->get();
         $response = [
-            "daily_list" => $dailyList,
-            "daily_tasks" => $dailyList->tasks
+            "daily_list" => $dailyList
         ];
 
         return response($response, 200);
@@ -26,9 +25,8 @@ class DailyTaskController extends Controller
     public function store(Request $request)
     {
         $dailyList = DailyList::with('tasks')->findOrFail($request->daily_list_id);
-
-        if ($dailyList->user_id !== $request->user()->id) {
-            return response(403);
+        if ($request->user()->cannot('store', $dailyList)) {
+            return response(["message" => "Not allowed"], 403);
         }
 
         foreach ($request->tasks as $task) {
@@ -52,9 +50,13 @@ class DailyTaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, int $id)
     {
-        //
+        $dailyTask = DailyTask::with("taskList")->findOrFail($id);
+        if ($request->user()->cannot('show', $dailyTask->taskList)) {
+            return response(["message" => "Not allowed"], 403);
+        }
+        return response($dailyTask, 200);
     }
 
     /**
@@ -65,7 +67,7 @@ class DailyTaskController extends Controller
         $dailyTask = DailyTask::with("taskList")->findOrFail($id);
 
         if ($request->user()->cannot('update', $dailyTask->taskList)) {
-            return response(403);
+            return response(["message" => "Not allowed"], 403);
         }
         $dailyTask->update($request->except('_token'));
 
@@ -80,7 +82,7 @@ class DailyTaskController extends Controller
         $dailyTask = DailyTask::with("taskList")->findOrFail($id);
 
         if ($request->user()->cannot('delete', $dailyTask->taskList)) {
-            return response(403);
+            return response(["message" => "Not allowed"], 403);
         }
 
         $dailyTask->delete();

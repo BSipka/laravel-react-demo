@@ -7,7 +7,14 @@ export default function DailyTaskListDetailPage() {
 
     return (
         <>
-            <div>Daily Task List Details</div>
+            <h3>{data.title}</h3>
+            <p>{data.description}</p>
+            <ul>
+                {data.tasks &&
+                    data.tasks.map((item) => (
+                        <li key={item.id}>{item.title}</li>
+                    ))}
+            </ul>
         </>
     );
 }

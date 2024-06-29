@@ -30,18 +30,21 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post("/auth-check", function (Request $request) {
         return $request->user();
     });
-    
-    Route::get('/daily-lists', [DailyListController::class, 'index']);
-    Route::get('/daily-list/{id}', [DailyListController::class, 'show']);
-    Route::put('/daily-list/{id}', [DailyListController::class, 'update']);
-    Route::post('/daily-list', [DailyListController::class, 'store']);
-    Route::delete('/daily-list/{id}', [DailyListController::class, 'delete']);
 
-    Route::get('/daily-task', [DailyTaskController::class, 'index']);
-    Route::get('/daily-task/{id}', [DailyListController::class, 'show']);
-    Route::post('/daily-task', [DailyTaskController::class, 'store']);
-    Route::put('/daily-task/{id}', [DailyTaskController::class, 'update']);
-    Route::delete('/daily-task/{id}', [DailyTaskController::class, 'delete']);
+    Route::group(['prefix' => 'daily-lists'], function () {
+        Route::get('/', [DailyListController::class, 'index']);
+        Route::get('/{id}', [DailyListController::class, 'show']);
+        Route::put('/{id}', [DailyListController::class, 'update']);
+        Route::post('/', [DailyListController::class, 'store']);
+        Route::delete('/{id}', [DailyListController::class, 'delete']);
+
+        Route::get('/tasks', [DailyTaskController::class, 'index']);
+        Route::get('/tasks/{id}', [DailyTaskController::class, 'show']);
+        Route::post('/tasks', [DailyTaskController::class, 'store']);
+        Route::put('/tasks/{id}', [DailyTaskController::class, 'update']);
+        Route::delete('/tasks/{id}', [DailyTaskController::class, 'delete']);
+    });
+
 
     Route::post("/destroy-token", [UserController::class, "destroyToken"]);
 });

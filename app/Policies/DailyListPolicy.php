@@ -35,4 +35,8 @@ class DailyListPolicy
         return $user->id === $dailyList->user_id;
     }
 
+    public function store(User $user, DailyList $dailyList)
+    {
+        return $user->id === $dailyList->user_id;
+    }
 }

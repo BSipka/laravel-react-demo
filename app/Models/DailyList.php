@@ -22,6 +22,6 @@ class DailyList extends Model
     }
     public function tasks()
     {
-        return $this->hasMany(DailyTask::class, 'id', 'daily_list_id');
+        return $this->hasMany(DailyTask::class);
     }
 }

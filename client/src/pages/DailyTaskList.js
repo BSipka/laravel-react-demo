@@ -1,5 +1,5 @@
 import React from "react";
-import { json, useLoaderData } from "react-router-dom";
+import { Link, json, useLoaderData } from "react-router-dom";
 import axiosClient from "../axiosClient";
 
 export default function DailyTaskListPage() {
@@ -9,7 +9,9 @@ export default function DailyTaskListPage() {
             {data.daily_list.map((item) => (
                 <li key={item.id}>
                     <article>
-                        <p>{item.title}</p>
+                        <Link to={`/auth/daily-task-list/${item.id}`}>
+                            {item.title}
+                        </Link>
                     </article>
                     <div>
                         <button>Edit</button>
