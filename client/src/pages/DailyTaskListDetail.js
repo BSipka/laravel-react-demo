@@ -20,7 +20,7 @@ export default function DailyTaskListDetailPage() {
 }
 
 export async function loader({ params }) {
-    const response = await axiosClient.get("/daily-list/" + params.id);
+    const response = await axiosClient.get("/daily-lists/" + params.id);
     if (response.status != 200) {
         throw json({ message: "Not found", status: response.status });
     }

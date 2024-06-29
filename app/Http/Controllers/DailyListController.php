@@ -44,7 +44,7 @@ class DailyListController extends Controller
         $dailyList = DailyList::with('tasks')->findOrFail($id);
 
         if ($request->user()->cannot('show', $dailyList)) {
-            return response(403);
+            return response(["message" => "Not allowed"], 403);
         }
         return response($dailyList, 200);
     }
@@ -71,7 +71,7 @@ class DailyListController extends Controller
         $dailyList = DailyList::findOrFail($id);
 
         if ($request->user()->cannot('delete', $dailyList)) {
-            return response(403);
+            return response(["message" => "Not allowed"], 403);
         }
 
         $dailyList->delete();

@@ -41,7 +41,7 @@ class DailyTaskController extends Controller
             );
         }
         $response = [
-            "daily_list" => $dailyList
+            "daily_list" => $dailyList->refresh()
         ];
 
         return response($response, 201);
