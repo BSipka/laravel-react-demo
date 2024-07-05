@@ -3,6 +3,7 @@
 use App\Http\Controllers\DailyListController;
 use App\Http\Controllers\DailyTaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,8 +28,8 @@ Route::post("/generate-token", [UserController::class, "generateToken"]);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-    Route::post("/auth-check", function (Request $request) {
-        return $request->user();
+    Route::get("/auth-check", function (Request $request) {
+        return new UserResource($request->user());
     });
 
     Route::group(['prefix' => 'daily-lists'], function () {

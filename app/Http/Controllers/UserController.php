@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TokenGenerateRequest;
 use App\Http\Requests\UserRegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -23,7 +24,7 @@ class UserController extends Controller
         $token = $user->createToken('todo-token')->plainTextToken;
 
         $response = [
-            'user' => $user,
+            'user' => new UserResource($user),
             'token' => $token
         ];
 
@@ -44,7 +45,7 @@ class UserController extends Controller
         $token = $user->createToken('todo-token')->plainTextToken;
 
         $response = [
-            'user' => $user,
+            'user' =>  new UserResource($user),
             'token' => $token
         ];
 

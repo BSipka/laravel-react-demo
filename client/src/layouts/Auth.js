@@ -23,7 +23,7 @@ function AuthLayout() {
 export default AuthLayout;
 
 export async function loader() {
-    const response = await axiosClient.post("/auth-check");
+    const response = await axiosClient.get("/auth-check");
     if (response.status != 200) {
         throw json({
             statusText: response.statusText,
