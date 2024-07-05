@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function DailyTaskPage() {
+export default function TaskPage() {
     return <div>DailyTaskPage</div>;
 }

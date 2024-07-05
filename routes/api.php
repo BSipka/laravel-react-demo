@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('/{id}', [DailyListController::class, 'show']);
         Route::put('/{id}', [DailyListController::class, 'update']);
         Route::post('/', [DailyListController::class, 'store']);
-        Route::delete('/{id}', [DailyListController::class, 'delete']);
+        Route::delete('/{id}', [DailyListController::class, 'destroy']);
 
         Route::get('/tasks', [DailyTaskController::class, 'index']);
         Route::get('/tasks/{id}', [DailyTaskController::class, 'show']);

@@ -26,7 +26,7 @@ function AuthNavigation(props) {
                                 return isActive ? classes.active : undefined;
                             }}
                             end
-                            to="/auth/daily-task-list"
+                            to="/auth/daily-list"
                         >
                             Daily Task List
                         </NavLink>

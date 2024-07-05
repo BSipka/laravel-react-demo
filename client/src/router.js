@@ -7,12 +7,17 @@ import AuthLayout, { loader as authLoader } from "./layouts/Auth";
 import ProfilePage from "./pages/Profile";
 import HomePage from "./pages/Home";
 import { action as logoutAction } from "./pages/Logout";
-import DailyTaskListPage, {
+import TaskListPage, {
     loader as dailyTaskListLoader,
-} from "./pages/DailyTaskList";
-import DailyTaskListDetailPage, {
+} from "./pages/DailyTask/TaskList";
+import TaskListDetailPage, {
     loader as dailyTaskListDetailLoader,
-} from "./pages/DailyTaskListDetail";
+    action as deleteTaskListAction,
+} from "./pages/DailyTask/TaskListDetail";
+import TaskListEditPage from "./pages/DailyTask/TaskListEdit";
+import TaskListCreate, {
+    action as createTaskListAction,
+} from "./pages/DailyTask/TaskListCreate";
 
 const { createBrowserRouter } = require("react-router-dom");
 
@@ -46,15 +51,37 @@ const router = createBrowserRouter([
                 element: <ProfilePage />,
             },
             {
-                path: "/auth/daily-task-list",
-                loader: dailyTaskListLoader,
-                element: <DailyTaskListPage />,
+                path: "/auth/daily-list",
+                children: [
+                    {
+                        index: true,
+                        loader: dailyTaskListLoader,
+                        element: <TaskListPage />,
+                    },
+                    {
+                        path: "create",
+                        action: createTaskListAction,
+                        element: <TaskListCreate />,
+                    },
+                    {
+                        path: ":id",
+                        loader: dailyTaskListDetailLoader,
+                        id: "task-list-detail",
+                        children: [
+                            {
+                                index: true,
+                                element: <TaskListDetailPage />,
+                                action: deleteTaskListAction,
+                            },
+                            {
+                                path: "edit",
+                                element: <TaskListEditPage />,
+                            },
+                        ],
+                    },
+                ],
             },
-            {
-                path: "/auth/daily-task-list/:id",
-                loader: dailyTaskListDetailLoader,
-                element: <DailyTaskListDetailPage />,
-            },
+
             {
                 path: "/auth/logout",
                 action: logoutAction,
