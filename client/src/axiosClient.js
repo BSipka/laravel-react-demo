@@ -21,7 +21,7 @@ axiosClient.interceptors.response.use(
             localStorage.removeItem("profile");
         }
 
-        throw error;
+        return response;
     }
 );
 

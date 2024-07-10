@@ -8,11 +8,11 @@ export default function TaskListPage() {
 
     return (
         <>
-            {data.daily_list.length === 0 ? (
+            {data === 0 ? (
                 <p>No current items</p>
             ) : (
                 <ul id="daily-list">
-                    {data.daily_list.map((item) => (
+                    {data.map((item) => (
                         <li key={item.id}>
                             <article>
                                 <Link to={`/auth/daily-list/${item.id}`}>

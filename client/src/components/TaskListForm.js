@@ -1,7 +1,13 @@
 import React from "react";
-import { Form, useNavigate, useNavigation } from "react-router-dom";
+import {
+    Form,
+    useNavigate,
+    useNavigation,
+    useActionData,
+} from "react-router-dom";
 
 export default function TaskListForm({ method, taskList }) {
+    const actionData = useActionData();
     const navigate = useNavigate();
     const navigation = useNavigation();
     const isSubmiting = navigation.state === "submitting";
@@ -9,8 +15,16 @@ export default function TaskListForm({ method, taskList }) {
     function cancelHandler() {
         navigate("..");
     }
+
     return (
         <Form method={method}>
+            {actionData && actionData.data.errors && (
+                <ul>
+                    {Object.values(actionData.data.errors).map((err) => (
+                        <li key={err}>{err}</li>
+                    ))}
+                </ul>
+            )}
             <p>
                 <label>Title</label>
                 <input

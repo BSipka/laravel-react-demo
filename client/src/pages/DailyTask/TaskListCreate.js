@@ -13,8 +13,12 @@ export async function action({ request, params }) {
         title: data.get("title"),
         description: data.get("description"),
     };
+
     const response = await axiosClient.post("/daily-lists", payload);
 
+    if (response.status === 422) {
+        return response;
+    }
     if (response.status != 201) {
         throw json({ message: "Submit failed", status: 500 });
     }

@@ -2,28 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskListRequest;
 use App\Models\DailyList;
 use Illuminate\Http\Request;
+use Illuminate\Redis\RedisManager;
 
 class DailyListController extends Controller
 {
+
+    public function __construct(private RedisManager $redis)
+    {
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
+        $dailyLists = $this->redis->get('daily_list_' . $request->user()->id);
+        if (isset($dailyLists)) {
+            $data = json_decode($dailyLists);
+            return response($data, 200);
+        }
+
         $dailyLists = DailyList::where('user_id', $request->user()->id)->get();
 
-        $response = [
-            'daily_list' => $dailyLists
-        ];
-        return response($response, 200);
+        $this->redis->set('all_users', $dailyLists, 'EX', 60);
+
+        return response($dailyLists, 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTaskListRequest $request)
     {
         $dailyList = DailyList::create([
             'user_id' => $request->user()->id,
